@@ -13,14 +13,13 @@ public class Simulazione {
 	public static void main(String[] args) {
 		Lampadina lampadina = new Lampadina(50);
 		CircuitoElettrico circuitoElettrico = new CircuitoElettrico(lampadina);
-		int n = 50;
+		int n = 49;
 		try{
 			while(n != 0){
 				
 				circuitoElettrico.SwitchOn();
-				if(n - 1 == 0){
-					control(circuitoElettrico.stato());
-				}
+				
+				control(circuitoElettrico.stato());
 				circuitoElettrico.SwitchOff();
 				n--;
 			

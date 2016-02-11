@@ -8,9 +8,13 @@ public class Address {
 	private String citt = "Milano";
 	private String interno;
 	
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
 	
-	Address(Integer id, String via, String nomeVia, String nCivico, String interno){
-		this.id = id;
+	
+	Address(String via, String nomeVia, String nCivico, String interno){
+		
 		this.via = via;
 		this.nomeVia = nomeVia;
 		this.nCivico = nCivico;
@@ -19,7 +23,7 @@ public class Address {
 	
 	
 	public String getAll(){
-		return this.via + this.nomeVia + this.nCivico + this.citt + this.interno;
+		return this.via + " " + this.nomeVia + " " + this.nCivico + " " + this.citt;
 	}
 	
 	@Override
@@ -38,7 +42,7 @@ public class Address {
 	@Override
 	public int hashCode() {
 		
-		return (via + nomeVia + nCivico + interno).hashCode();
+		return (via + nomeVia + nCivico).hashCode();
 	}
 	
 	

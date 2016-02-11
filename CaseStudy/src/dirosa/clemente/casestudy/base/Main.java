@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+//import javax.xml.transform.Templates;
+
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
@@ -20,42 +22,68 @@ import com.google.maps.model.GeocodingResult;
 public class Main {
 	public static void main(String[] args){
 		
-		FileReader fr = null;
-		BufferedReader br = null;
-		FileWriter fw = null;
-		PrintWriter pw = null;
+	
 		
 		
 		//togliere chiave
-		
+		System.out.println("zero");
 		
 	
 		try{
+					
 			
-			 fr = new FileReader("attivita_comm_media_grande_distrib.csv");
-			 br = new BufferedReader(fr);
+			FileWriter fw = null;
+			PrintWriter pw = null;
+			FileReader fr  = new FileReader("src/dirosa/clemente/casestudy/base/attivita_comm_media_grande_distrib.csv");
+			BufferedReader br =  new BufferedReader(fr);
 		
+			System.out.println("1");
 			
+			Address ind = new Address();
 			
-			
+			 List<Integer> t = new ArrayList<Integer>();
+			 String[] items = new String[18];
 			
 			// ciclo while finche str == null
 			 Integer i = 0;
 			String str = br.readLine();
-			List<Integer> in = new ArrayList<Integer>();
+		
+		//	double[] xy = new double[2];
+			
 			
 			Map<Address, List<Integer>> miamappa = new  HashMap<Address, List<Integer>>();
-			while(str != null){
+			while( (str = br.readLine()) != null){
 				
-				String[] items = str.split(";");
-				Address ind = new Address(i,items[2],items[3],items[4], items[5]);
-				List<Integer> t = new ArrayList<Integer>();
-				t = miamappa.get(ind);
-				t.add(i);
-				miamappa.put(ind, t);
+				ind = new Address(items[2],items[3],items[4], items[5]);
 				
-				i++;
-				str += br.readLine();
+				
+				while(controllo(str, ';') < 17){
+					str = str.concat(br.readLine());
+				}
+				items = str.split(";");
+				
+				if(items[2].length() > 0 && items[3].length() > 0 && items[4].length() > 0){
+				
+					
+					
+					
+					t = miamappa.get(ind);
+					
+					if(t == null){
+						t = new ArrayList<Integer>();
+						t.add(i);
+						miamappa.put(ind, t);
+					}else{
+						t.add(i);
+						miamappa.put(ind, t);
+					}
+					
+					i++;
+
+
+				}
+				
+				
 			}
 			
 			// split
@@ -72,26 +100,88 @@ public class Main {
 			// {address1: [id1, id2], address2: [id3, id4]}
 			
 			// chiamo google maps per ogni address
-			
+			System.out.println("duee");
 			Set<Address> indirizzi = miamappa.keySet();
 			Address a = indirizzi.iterator().next();
 			//lavorare su indirizzi
 			String all = a.getAll();
+			System.out.println("treee");
+			
+			fw = new FileWriter("src/dirosa/clemente/casestudy/base/conversione.csv");
+				
+			
+			System.out.println("quatt");
+		
+			//per ogni key e ogni id della map
+			pw = new PrintWriter(fw);
+			
+			
+			System.out.println("cing");
+			
+			
 			
 			// pre prova usare sync
 			
+			System.out.println("sejj");
+			
+			GeoApiContext context = null;
+			GeocodingResult[] results = null;
 			// togliere key ed inserire args[0]
-			GeoApiContext context = new GeoApiContext().setApiKey(args[0]);
-			GeocodingResult[] results =  GeocodingApi.geocode(context,
-			    all).await();
 			
+			/*context = new GeoApiContext().setApiKey(args[0]);
+			results =  GeocodingApi.geocode(context, 
+			    all).await();*/
+			//xy[0] = results[0].geometry.location.lat;
+			//xy[1] = results[0].geometry.location.lng;
+			
+			System.out.println("settt");
 			// progetto finale: usare async
-			br.close();
-			System.out.println(results[0]);
-			//codifica finale ? 
+			int con = 0;
+			/*while(con < results.length){
+				System.out.println("Result di : "  + con + " vale : " + results[con].formattedAddress +
+						"a: " + results[con].geometry.location.lat + 
+						" b " + results[con].geometry.location.lng);
+				con++;
+				
+			}*/
+			int j = 0;
+			pw.println("id1;latitudine;longitudine;address_di_google;ListInteger");
+			for(Address ad: miamappa.keySet()) {
+			   // for(Integer integer : ad.)
+			        if(con < 10){
+			        	
+					        context = new GeoApiContext().setApiKey(args[0]);
+							results =  GeocodingApi.geocode(context,
+									"Milano " + ad.getAll()).await();
+							//System.out.println(results[con].formattedAddress);
+							//while(j < results.length){
+								pw.println(con + ";" + results[j].geometry.location.lat + ";" 
+								+ results[j].geometry.location.lng + ";"
+										+ results[j].formattedAddress + " ; " + miamappa.get(ad));
+								//j++;
+					        //}
+							//j = 0;
+			        	}
+			        
+			        	
+			        con++;
+		    }
 			
+			
+			
+			
+			
+			/*
+			System.out.println(results[0].formattedAddress);
+			System.out.println(results[1] + " " + results[2]);
+			//codifica finale ? 
+			*/
+			
+			
+			br.close();
+			pw.close();/*
 			int x = Integer.parseInt(args[1]) - 1;
-			int y = Integer.parseInt(args[2]) - 1;
+			int y = Integer.parseInt(args[2]) - 1;*/
 	
 			
 			/*
@@ -99,19 +189,12 @@ public class Main {
 			System.out.println(results[0].geometry.location.lat);
 			System.out.println(results[0].geometry.location.lng);*/
 			
-			
+			System.out.println("Fine");
 			// salvo lat/lng + addressname
 			
-			
-			fw = new FileWriter("conversione.csv");
-				
 		
-			//per ogni key e ogni id della map
-			pw = new PrintWriter(fw);
-			
-			pw.println("id1;lat;lng;address_di_google");
 		}catch(Exception e){
-			
+			e.printStackTrace();
 		}finally{
 		/*	try {
 				//br.close();
@@ -121,5 +204,14 @@ public class Main {
 			
 			}*/
 		}
+	}
+	
+	public static int controllo(String str, char c){
+		int i = 0;
+		for(int j = 0; j<str.length(); ++j){
+			if(str.charAt(j) == c)
+				++i;
+		}
+		return i;
 	}
 }

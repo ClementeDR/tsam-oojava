@@ -21,7 +21,18 @@ import com.google.maps.model.GeocodingResult;
 
 public class Main {
 	public static void main(String[] args){
+		// split
 		
+		
+		
+		// seleziono i campi dell'indirizzo + l'id (ovvero n. riga)
+		// indirizzo sono i campi ALZ 	NAVIGLIO GRANDE	98
+		// creo oggetto con questi campi address, l'id su list di integer
+		
+		// salvo su 
+
+		//indirizzoAttivita
+		// {address1: [id1, id2], address2: [id3, id4]}
 	
 		
 		
@@ -86,18 +97,7 @@ public class Main {
 				
 			}
 			
-			// split
-			
-			
-			
-			// seleziono i campi dell'indirizzo + l'id (ovvero n. riga)
-			// indirizzo sono i campi ALZ 	NAVIGLIO GRANDE	98
-			// creo oggetto con questi campi address, l'id su list di integer
-			
-			// salvo su 
 	
-			//indirizzoAttivita
-			// {address1: [id1, id2], address2: [id3, id4]}
 			
 			// chiamo google maps per ogni address
 			System.out.println("duee");
@@ -128,39 +128,27 @@ public class Main {
 			GeocodingResult[] results = null;
 			// togliere key ed inserire args[0]
 			
-			/*context = new GeoApiContext().setApiKey(args[0]);
-			results =  GeocodingApi.geocode(context, 
-			    all).await();*/
-			//xy[0] = results[0].geometry.location.lat;
-			//xy[1] = results[0].geometry.location.lng;
-			
+		
 			System.out.println("settt");
 			// progetto finale: usare async
 			int con = 0;
-			/*while(con < results.length){
-				System.out.println("Result di : "  + con + " vale : " + results[con].formattedAddress +
-						"a: " + results[con].geometry.location.lat + 
-						" b " + results[con].geometry.location.lng);
-				con++;
-				
-			}*/
-			int j = 0;
+		
 			pw.println("id1;latitudine;longitudine;address_di_google;ListInteger");
 			for(Address ad: miamappa.keySet()) {
-			   // for(Integer integer : ad.)
+			 
 			        if(con < 10){
-			        	
+			        	//per inserire la lista di ID
+			        	for(Integer ite : miamappa.get(ad)){
 					        context = new GeoApiContext().setApiKey(args[0]);
 							results =  GeocodingApi.geocode(context,
 									"Milano " + ad.getAll()).await();
 							//System.out.println(results[con].formattedAddress);
-							//while(j < results.length){
-								pw.println(con + ";" + results[j].geometry.location.lat + ";" 
-								+ results[j].geometry.location.lng + ";"
-										+ results[j].formattedAddress + " ; " + miamappa.get(ad));
-								//j++;
-					        //}
-							//j = 0;
+							
+								pw.println(ite + ";" + results[0].geometry.location.lat + ";" 
+								+ results[0].geometry.location.lng + ";"
+										+ results[0].formattedAddress + " ; " + miamappa.get(ad));
+							
+			        		}
 			        	}
 			        
 			        	

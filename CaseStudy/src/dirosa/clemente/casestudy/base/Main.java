@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 
 //import javax.xml.transform.Templates;
 
@@ -55,11 +55,10 @@ public class Main {
 			 List<Integer> t = new ArrayList<Integer>();
 			 String[] items = new String[18];
 			
-			// ciclo while finche str == null
+			// ciclo while finche str != null
 			 Integer i = 0;
 			String str = br.readLine();
-		
-		//	double[] xy = new double[2];
+	
 			
 			
 			Map<Address, List<Integer>> miamappa = new  HashMap<Address, List<Integer>>();
@@ -101,10 +100,10 @@ public class Main {
 			
 			// chiamo google maps per ogni address
 			System.out.println("duee");
-			Set<Address> indirizzi = miamappa.keySet();
-			Address a = indirizzi.iterator().next();
+			//Set<Address> indirizzi = miamappa.keySet();
+			//Address a = indirizzi.iterator().next();
 			//lavorare su indirizzi
-			String all = a.getAll();
+			//String all = a.getAll();
 			System.out.println("treee");
 			
 			fw = new FileWriter("src/dirosa/clemente/casestudy/base/conversione.csv");

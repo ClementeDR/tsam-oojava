@@ -2,7 +2,6 @@ package dirosa.clemente.casestudy.base;
 
 public class Address {
 	private String via;
-	private Integer id;
 	private String nomeVia;
 	private String nCivico;
 	private String citt = "Milano";
@@ -92,14 +91,7 @@ public class Address {
 	}
 
 
-	public Integer getId() {
-		return id;
-	}
 
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
 	
 }

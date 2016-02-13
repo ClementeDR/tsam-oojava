@@ -138,7 +138,7 @@ public class Main {
 			 
 			      //  if(con < miamappa.size()){
 				
-				 context = new GeoApiContext().setApiKey("AIzaSyAaVVEKnoAswbyZMyGJ7QgPqwMufwPkd4Q");
+				 context = new GeoApiContext().setApiKey(args[0]);
 					results =  GeocodingApi.geocode(context,
 							"Milano " + ad.getAll()).await();
 			        	//per inserire la lista di ID

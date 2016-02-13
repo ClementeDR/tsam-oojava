@@ -92,20 +92,19 @@ public class Main {
 			pw.println("id1;latitudine;longitudine;address_di_google;ListInteger");
 			for(Address ad: miamappa.keySet()) {
 			 
-			    
-			        	  context = new GeoApiContext().setApiKey(args[0]);
-							results =  GeocodingApi.geocode(context,
-									"Milano " + ad.getAll()).await();
+			        if(con < 10){
 			        	//per inserire la lista di ID
 			        	for(Integer ite : miamappa.get(ad)){
-					      
+					        context = new GeoApiContext().setApiKey(args[0]);
+							results =  GeocodingApi.geocode(context,
+									"Milano " + ad.getAll()).await();
 							// salvo lat/lng + addressname
 							
 							pw.println(ite + ";" + results[0].geometry.location.lat + ";" 
 								+ results[0].geometry.location.lng + ";"
 										+ results[0].formattedAddress + " ; " + miamappa.get(ad));
 							
-			        	
+			        	}
 			        	}
 			        
 			        con++;
